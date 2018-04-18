@@ -10,9 +10,19 @@ import {
 } from 'typeorm';
 
 // import database model
+import { RoomClass } from './RoomClass';
+import { Hospital } from './Hospital';
+import { Patient } from './Patient';
+import { Booking } from './Booking';
+import { Room } from './Room';
 
 // include database model into entities object
 const entities = {
+  RoomClass,
+  Hospital,
+  Patient,
+  Booking,
+  Room
 };
 
 const getModel = async (modelName: string) => {
