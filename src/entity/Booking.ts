@@ -12,6 +12,7 @@ import {
 
 import { Patient } from './Patient';
 import { Hospital } from './Hospital';
+import { RoomClass } from './RoomClass';
 
 @Entity()
 export class Booking {
@@ -30,13 +31,14 @@ export class Booking {
   @Column()
   is_processing: boolean;
 
-  @OneToOne(type => Patient)
-  @JoinColumn()
-  patient: Patient;
+  @Column()
+  hospital_id: number;
 
-  @OneToOne(type => Hospital)
-  @JoinColumn()
-  hospital: Hospital;
+  @Column()
+  room_class_id: number;
+
+  @Column()
+  patient_id: string;
 };
 
 // src/entity/Booking.ts

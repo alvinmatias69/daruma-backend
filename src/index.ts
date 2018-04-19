@@ -14,7 +14,7 @@ import * as helmet from 'helmet';
 dotenv.config();
 
 const app: express.Application = express();
-const port: number = process.env.PORT || 3000;
+const port: number = Number(process.env.PORT) || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

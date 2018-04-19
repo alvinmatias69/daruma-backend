@@ -10,26 +10,19 @@ import {
   PrimaryColumn
 } from 'typeorm';
 
-import { Patient } from './Patient';
-import { Hospital } from './Hospital';
-
 @Entity()
 export class Room {
-  @OneToOne(type => Patient)
-  @JoinColumn()
   @PrimaryColumn()
-  patient: Patient;
+  class_id: number;
 
-  @OneToOne(type => Hospital)
-  @JoinColumn()
   @PrimaryColumn()
-  hospital: Hospital;
+  hospital_id: number;
 
   @Column()
   price: number;
 
   @Column()
   capacity: number;
-}:
+};
 
 // src/entity/Room.ts

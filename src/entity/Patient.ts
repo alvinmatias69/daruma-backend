@@ -5,13 +5,13 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn
+  PrimaryColumn
 } from 'typeorm';
 
 @Entity()
 export class Patient {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   name: string;
