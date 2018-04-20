@@ -34,7 +34,7 @@ router.get('/', async (req: Request, res: Response) => {
     res.json(responseList);
     
   } catch (e) {
-    res.status(400).send('Invalid where or whereLike queries');
+    res.status(400).json({ error: 'Invalid where or whereLike queries' });
   }
 });
 

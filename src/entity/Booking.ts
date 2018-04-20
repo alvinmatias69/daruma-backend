@@ -39,6 +39,18 @@ export class Booking {
 
   @Column()
   patient_id: string;
+
+  constructor(booking_date: string,
+    hospital_id: number,
+    room_class_id: number,
+    patient_id: string) {
+
+    this.booking_date = booking_date;
+    this.hospital_id = hospital_id;
+    this.room_class_id = room_class_id;
+    this.patient_id = patient_id;
+
+  };
 };
 
 // src/entity/Booking.ts

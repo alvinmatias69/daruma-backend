@@ -77,8 +77,13 @@
  *          }
  *      ]
  *    }]
+ *
  * @apiErrorExample {json} List error
- *    HTTP/1.1 400 Invalid where or whereLike query
+ *    HTTP/1.1 400 Invalid
+ *    {
+ *      "error": "Invalid where or whereLike query"
+ *    }
+ *
  */
 
 /**
