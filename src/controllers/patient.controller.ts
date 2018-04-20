@@ -76,7 +76,7 @@ router.post('/login', async (req: Request, res: Response) => {
     return res.status(400).json({ error: `Fields ${validity[1].join(', ')} are required` });
   };
 
-  const patient: Patient = await PatientLib.getPatient({ email: body.email });
+  const patient = await PatientLib.getPatient({ email: body.email });
 
   if (!patient) {
     return res.status(401).json({ error: 'Email is not recognized' });

@@ -10,8 +10,16 @@ const getPatient = async (field) => {
 
   const patient = await patientRepository
     .createQueryBuilder('patient')
+    .select([
+      'patient.id id',
+      'patient.name name',
+      'patient.address address',
+      'patient.phone phone',
+      'patient.password password',
+      'patient.email email',
+    ])
     .where(`patient.${key} = '${field[key]}'`)
-    .getOne();
+    .getRawOne();
 
   return patient;
 };
