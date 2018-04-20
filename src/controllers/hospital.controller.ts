@@ -38,6 +38,27 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+
+router.get('/count', async (req: Request, res: Response) => {
+  const count = await HospitalLib.getHospitalCount();
+
+  res.json(count);
+});
+
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const hospitalList = await HospitalLib.getHospitalList(id);
+  const groupedRoom = HospitalLib.groupClassByHospital(hospitalList);
+  const groupHospital = HospitalLib.groupHospital(hospitalList);
+
+  const response = HospitalLib.getFullList(groupHospital, groupedRoom)[0];
+
+  res.json(response);
+});
+
+
 export const HospitalController: Router = router;
 
 // src/controllers/hospital.controller.ts

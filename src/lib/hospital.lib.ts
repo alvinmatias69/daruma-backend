@@ -4,10 +4,10 @@
 
 import { getModel, Booking } from '../entity';
 
-const getHospitalList = async () => {
+const getHospitalList = async (id=null) => {
   const hospitalRepository = await getModel('Hospital');
 
-  const hospitalList = await hospitalRepository
+  let hospitalQuery = await hospitalRepository
     .createQueryBuilder('hospital')
     .select([
       'hospital.id id',
@@ -22,8 +22,8 @@ const getHospitalList = async () => {
       'room.capacity capacity',
       'COALESCE(booking.total, 0) occupied'
     ])
-    .innerJoin('room', 'room', 'room.hospital_id = hospital.id')
-    .innerJoin('room_class', 'room_class', 'room.class_id = room_class.id')
+    .leftJoin('room', 'room', 'room.hospital_id = hospital.id')
+    .leftJoin('room_class', 'room_class', 'room.class_id = room_class.id')
     .leftJoin(
       booking => booking
         .select([
@@ -36,8 +36,13 @@ const getHospitalList = async () => {
         .groupBy('booking.hospital_id')
         .addGroupBy('booking.room_class_id'),
       'booking',
-      'booking.hospital_id = hospital.id AND booking.room_class_id = room_class.id')
-    .getRawMany();
+      'booking.hospital_id = hospital.id AND booking.room_class_id = room_class.id');
+
+  if (!!id) {
+    hospitalQuery = hospitalQuery.where('hospital.id = :id', { id });
+  }
+
+  const hospitalList = hospitalQuery.getRawMany();
 
   return hospitalList;
 };
@@ -96,13 +101,18 @@ const getMinimalList = (groupedHospital, groupedRoom) => {
       phone: hospital.phone,
       longitude: hospital.longitude,
       latitude: hospital.latitude,
-      available_class: groupedRoom[hospital.id].map(room => room.id),
+      available_class: groupedRoom[hospital.id]
+        .filter(room => !!room.id)
+        .map(room => room.id),
+      available_room_count: groupedRoom[hospital.id]
+        .map(room => room. available_count)
+        .reduce((count, current) => count + current, 0) || 0,
       min_price: groupedRoom[hospital.id]
         .map(room => room.price)
-        .reduce((min, current) => min > current ? current : min),
+        .reduce((min, current) => min > current ? current : min) || 0,
       max_price: groupedRoom[hospital.id]
         .map(room => room.price)
-        .reduce((max, current) => max < current ? current : max),
+        .reduce((max, current) => max < current ? current : max) || 0,
       rooms: []
     }));
 
@@ -113,7 +123,7 @@ const getMinimalList = (groupedHospital, groupedRoom) => {
 const getFullList = (groupedHospital, groupedRoom) => {
   const hospitalList = getMinimalList(groupedHospital, groupedRoom)
     .map(hospital => {
-      hospital.rooms = groupedRoom[hospital.id];
+      hospital.rooms = groupedRoom[hospital.id].filter(room => !!room.id);
       return hospital;
     });
 
@@ -155,13 +165,26 @@ const evaluateWhere = (hospitalList, where, whereLike) => {
 };
 
 
+const getHospitalCount = async() => {
+  const hospitalRepository = await getModel('Hospital');
+
+  const hospitalCount = await hospitalRepository
+    .createQueryBuilder('hospital')
+    .select('COUNT(hospital.id)', 'count')
+    .getRawOne();
+
+  return hospitalCount;
+};
+
+
 export {
   getHospitalList,
   groupClassByHospital,
   groupHospital,
   getMinimalList,
   getFullList,
-  evaluateWhere
+  evaluateWhere,
+  getHospitalCount
 };
 
 // src/lib/hospital.lib.ts

@@ -24,7 +24,7 @@ app.use(helmet());
 routes.init(app);
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+	console.log(`Listening on port ${port}`);
 });
 
 // src/index.ts

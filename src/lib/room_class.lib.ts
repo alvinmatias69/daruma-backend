@@ -9,7 +9,10 @@ const getAll = async () => {
 
   const RoomClassList = await RoomClassRepository
     .createQueryBuilder('room_class')
-    .select()
+    .select([
+      'room_class.id id',
+      'room_class.name name'
+    ])
     .getRawMany();
 
   return RoomClassList;

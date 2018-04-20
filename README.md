@@ -12,13 +12,12 @@ This project use javascript as base language and npm for package manager. Make s
     ```
     npm install
     ```
-    _By default, this project will use postgres as database. To use another database service, install the correspondent driver_
+    _By default, this project will use mysql as database. To use another database service, install the correspondent driver_
 
 2. Edit environment variable.
     Edit `.env.example` file according to your environment setup. Save the file as `.env`
     ```env
     PORT=3000
-    DB_TYPE=postgres
     DB_HOST=localhost
     DB_USER=test
     DB_PASS=test
@@ -40,15 +39,21 @@ npm run lint <FILE_NAME>
 Always run linter on every file before you push.
 
 ### Nodemon
-For a better developing experiences, we can use nodemon to watch change in file. First makes sure you have nodemon installed on your system.
+For a better developing experiences, we can use [nodemon](https://nodemon.io/) to watch change in file. Nodemon is included as development dependency.
+Simply run development script on your terminal.
 ```
-npm install -g nodemon
-```
-Then simply run nodemon on your terminal.
-```
-nodemon
+npm run develop
 ```
 To review or make changes to nodemon rules, you can touch `nodemon.json`.
+
+### Documentation
+This project use [apidoc](http://apidocjs.com/) for documenting REST API. Apidoc is included as development dependency.
+To generate documentation run generate documentation script on your terminal.
+```
+npm run generate-docs
+```
+Your documentation will be generated on `./docs/dist/` folder.
+To add or modify documentation you can go to `./docs/src` folder and edit respective files. Please reffer to Apidoc documentation for creating a documentation.
 
 ### Build for Production
 To make production build, we must compile typescript to javascript then run the server from them.
