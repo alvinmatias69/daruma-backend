@@ -15,6 +15,7 @@ dotenv.config();
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
+const host: string = process.env.HOST || 'localhost';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,8 +24,8 @@ app.use(helmet());
 
 routes.init(app);
 
-app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+app.listen(port, host, () => {
+  console.log(`Listening on ${host}:${port}`);
 });
 
 // src/index.ts
