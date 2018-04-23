@@ -157,7 +157,7 @@ const evaluateWhere = (hospitalList, where, whereLike) => {
       let condition: boolean = true;
       Object.keys(whereLike).forEach(key => {
         if (key in hospital) {
-          condition = String(hospital[key]).includes(whereLike[key]);
+          condition = String(hospital[key]).toLowerCase().includes(whereLike[key].toLowerCase());
         }
       });
       return condition;

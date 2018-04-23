@@ -11,11 +11,15 @@
  * @apiParam {Number}   hospital_id   ID of hospital
  *
  * @apiSuccess {Boolean}  status      Booking status
+ * @apiSuccess {Number}   price       Booking price
+ * @apiSuccess {Date}     deadline    Booking pay date
  *
  * @apiSuccessExample {json} Success
  *    HTTP/1.1 200 OK
  *    {
- *      "success": true
+ *      "success": true,
+ *      "price": 200,
+ *      "deadline": "2018-04-23T14:34:22.185Z"
  *    }
  *
  * @apiErrorExample {json} Field(s) not completed
