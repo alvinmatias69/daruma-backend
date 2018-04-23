@@ -16,7 +16,6 @@ dotenv.config();
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3000;
-const host: string = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,8 +25,8 @@ app.use(helmet());
 
 routes.init(app);
 
-app.listen(port, host, () => {
-  console.log(`Listening on ${host}:${port}`);
+app.listen(port, () => {
+  console.log(`Listening on localhost:${port}`);
 });
 
 // src/index.ts
