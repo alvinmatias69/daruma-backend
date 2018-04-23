@@ -8,7 +8,7 @@ import {
   Request
 } from 'express';
 
-import { RequestLib, PatientLib, BookingLib } from '../lib';
+import { RequestLib, PatientLib, BookingLib, RoomLib } from '../lib';
 import { Patient, Booking } from '../entity';
 
 const router: Router = Router();
@@ -58,7 +58,15 @@ router.post('/', async (req: Request, res: Response) => {
   const bookingStatus: boolean = await BookingLib.insertBooking(booking);
 
   if (bookingStatus) {
-    res.json({ 'success': true });
+
+    const price: number = await RoomLib.getRoomPrice(body.class_id, body.hospital_id);
+    const deadline: Date = new Date(new Date().getTime() + 3600000);
+    res.json({
+      'success': true,
+      price,
+      deadline
+    });
+
   } else {
     res.status(500).json({ error: 'Insert booking failure' });
   }

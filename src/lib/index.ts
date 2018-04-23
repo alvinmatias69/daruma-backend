@@ -6,6 +6,7 @@ import * as RoomClassLib from './room_class.lib';
 import * as RequestLib from './request.lib';
 import * as PatientLib from './patient.lib';
 import * as BookingLib from './booking.lib';
+import * as RoomLib from './room.lib';
 
 export {
   HospitalLib,
@@ -13,6 +14,7 @@ export {
   RequestLib,
   PatientLib,
   BookingLib,
+  RoomLib,
 };
 
 // src/lib/index.ts
